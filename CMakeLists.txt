@@ -35,9 +35,9 @@ list(APPEND LIB_LIST ${ZLIB_LIBRARIES})
 
 
 # Main sources
-include_directories(${CMAKE_CURRENT_SOURCE_DIR})
+include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
 
-file(GLOB SRC common/*.cpp src/**.cpp)
+file(GLOB SRC src/**/**.cpp src/**.cpp)
 
 add_executable(zsign ${SRC})
 target_link_libraries(zsign ${LIB_LIST})
