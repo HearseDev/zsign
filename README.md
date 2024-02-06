@@ -1,4 +1,4 @@
-Update
+An updated fork of zsign
 
 ## License
 
