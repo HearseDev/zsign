@@ -3,5 +3,5 @@ zsign
 *.dSYM
 *.ipa
 .zsign*
-.xmake
 build
+compile_commands.json

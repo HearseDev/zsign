@@ -1,4 +1,20 @@
+# zsign
+
 An updated fork of zsign
+
+## Building
+
+### Dependencies
+
+- `cmake`
+- `make`
+- `openssl`
+
+Run the build script
+
+```bash
+build.sh
+```
 
 ## License
 
