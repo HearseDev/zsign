@@ -15,16 +15,18 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install dependencies
-        run: |
-          if [[ "$RUNNER_OS" == "Windows" ]]; then
-            choco install cmake make openssl zlib
-          elif [[ "$RUNNER_OS" == "Linux" ]]; then
-            sudo apt-get update
-            sudo apt-get install -y cmake make openssl zlib1g-dev
-          elif [[ "$RUNNER_OS" == "macOS" ]]; then
-            brew install cmake make openssl zlib
-          fi
+      - name: Install dependencies on Ubuntu
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y cmake make openssl zlib1g-dev
+
+      - name: Install dependencies on macOS
+        if: runner.os == 'macOS'
+        run: brew install cmake make openssl zlib
+
+      - name: Install dependencies on Windows
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: choco install cmake make openssl zlib
 
       - name: Configure
         run: cmake -DCMAKE_BUILD_TYPE=Release .
@@ -35,5 +37,5 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: binary-${{ matrix.os }}
+          name: zsign-${{ matrix.os }}
           path: ./zsign
