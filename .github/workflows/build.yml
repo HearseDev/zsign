@@ -26,7 +26,8 @@ jobs:
       - name: Install dependencies on Windows
         if: runner.os == 'Windows'
         shell: pwsh
-        run: choco install cmake make openssl zlib
+        run: choco install cmake make openssl vcpkg
+        vcpkg install zlib
 
       - name: Configure
         run: cmake -DCMAKE_BUILD_TYPE=Release .
