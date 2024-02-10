@@ -5,6 +5,7 @@
 #include <dirent.h>
 #include <getopt.h>
 #include <libgen.h>
+#include "zsign_config.h"
 
 const struct option options[] = { { "debug", no_argument, NULL, 'd' },
     { "force", no_argument, NULL, 'f' }, { "verbose", no_argument, NULL, 'v' },
@@ -19,7 +20,9 @@ const struct option options[] = { { "debug", no_argument, NULL, 'd' },
     { "zip_level", required_argument, NULL, 'z' },
     { "dylib", required_argument, NULL, 'l' },
     { "weak", no_argument, NULL, 'w' }, { "install", no_argument, NULL, 'i' },
-    { "quiet", no_argument, NULL, 'q' }, { "help", no_argument, NULL, 'h' }, {} };
+    { "quiet", no_argument, NULL, 'q' }, { "help", no_argument, NULL, 'h' }, 
+	{ "version", no_argument, NULL, 'v' },
+	{}};
 
 int usage () {
     ZLog::Print ("Usage: zsign [-options] [-k privkey.pem] [-m dev.prov] [-o "
@@ -97,7 +100,7 @@ int main (int argc, char* argv[]) {
         case 'x': bRemoveProv = true; break;
         case 'q': ZLog::SetLogLever (ZLog::E_NONE); break;
         case 'v': {
-            printf ("version: 0.5\n");
+            printf ("zsign v%d.%d\n", ZSIGN_VERSION_MAJOR, ZSIGN_VERSION_MINOR);
             return 0;
         } break;
         case 'h':

@@ -1,7 +1,16 @@
 cmake_minimum_required(VERSION 3.14)
 
-project(zsign)
+# Project configuration
+project(zsign VERSION 1.0)
 set(CMAKE_CXX_STANDARD 20)
+set (SRC_DIR ${CMAKE_CURRENT_SOURCE_DIR}/src)
+
+# Configure version header
+configure_file(${SRC_DIR}/zsign_config.h.in zsign_config.h)
+
+# Main sources
+file(GLOB SRC ${SRC_DIR}/**/**.cpp ${SRC_DIR}/**.cpp)
+add_executable(zsign ${SRC})
 
 # Dependencies
 # On macOS, search Homebrew for keg-only versions of OpenSSL because system provided /usr/lib/libssl.dylib cannot be linked
@@ -22,23 +31,21 @@ else()
     find_package(OpenSSL REQUIRED)
 endif()
 
+# Configure OpenSSL
 message("OpenSSL include dir: ${OPENSSL_INCLUDE_DIR}")
 message("OpenSSL libraries: ${OPENSSL_LIBRARIES}")
-include_directories(${OPENSSL_INCLUDE_DIR})
+target_include_directories(zsign PRIVATE ${OPENSSL_INCLUDE_DIR})
 list(APPEND LIB_LIST ${OPENSSL_LIBRARIES})
 
+# Configure ZLIB
 find_package(ZLIB REQUIRED)
 message("zlib include dir: ${ZLIB_INCLUDE_DIR}")
 message("zlib libraries: ${ZLIB_LIBRARIES}")
-include_directories(${ZLIB_INCLUDE_DIR})
+target_include_directories(zsign PRIVATE ${ZLIB_INCLUDE_DIR})
 list(APPEND LIB_LIST ${ZLIB_LIBRARIES})
 
-
-# Main sources
-include_directories(${CMAKE_CURRENT_SOURCE_DIR}/src)
-
-file(GLOB SRC src/**/**.cpp src/**.cpp)
-
-add_executable(zsign ${SRC})
+# Finalize
+target_include_directories(zsign PRIVATE ${SRC_DIR})
 target_link_libraries(zsign ${LIB_LIST})
 
+target_include_directories(zsign PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
