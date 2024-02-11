@@ -31,10 +31,6 @@ else()
     find_package(OpenSSL REQUIRED)
 endif()
 
-if(WIN32)
-    find_package(mman CONFIG REQUIRED)
-    target_link_libraries(zsign PRIVATE mman)
-endif()
 
 # Configure OpenSSL
 message("OpenSSL include dir: ${OPENSSL_INCLUDE_DIR}")
@@ -48,6 +44,11 @@ message("zlib include dir: ${ZLIB_INCLUDE_DIR}")
 message("zlib libraries: ${ZLIB_LIBRARIES}")
 target_include_directories(zsign PRIVATE ${ZLIB_INCLUDE_DIR})
 list(APPEND LIB_LIST ${ZLIB_LIBRARIES})
+
+if(WIN32)
+    find_package(mman CONFIG REQUIRED)
+	list(APPEND LIB_LIST mman)
+endif()
 
 # Finalize
 target_include_directories(zsign PRIVATE ${SRC_DIR})
