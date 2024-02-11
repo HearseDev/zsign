@@ -15,13 +15,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - name: Install dependencies on Ubuntu
-        if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y cmake make openssl zlib1g-dev
+      # - name: Install dependencies on Ubuntu
+      #   if: runner.os == 'Linux'
+      #   run: sudo apt-get update && sudo apt-get install -y cmake make openssl zlib1g-dev
 
-      - name: Install dependencies on macOS
-        if: runner.os == 'macOS'
-        run: brew install cmake make openssl zlib
+      # - name: Install dependencies on macOS
+      #   if: runner.os == 'macOS'
+      #   run: brew install cmake make openssl zlib
 
       - name: Install dependencies on Windows
         if: runner.os == 'Windows'
@@ -32,11 +32,11 @@ jobs:
 
       - name: Configure for Windows
         if: runner.os == 'Windows'
-        run: cmake --preset=windows -DCMAKE_BUILD_TYPE=Release ..
+        run: cmake --preset=windows -DCMAKE_BUILD_TYPE=Release .
 
-      - name: Configure for Linux and macOS
-        if: runner.os != 'Windows'
-        run: cmake -DCMAKE_BUILD_TYPE=Release ..
+      # - name: Configure for Linux and macOS
+      #   if: runner.os != 'Windows'
+      #   run: cmake -DCMAKE_BUILD_TYPE=Release .
 
       - name: Build
         run: cmake --build . --config Release
