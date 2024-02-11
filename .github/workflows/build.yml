@@ -26,8 +26,10 @@ jobs:
       - name: Install dependencies on Windows
         if: runner.os == 'Windows'
         shell: pwsh
+        env:
+          VCPKG_ROOT: ${{ VCPKG_INSTALLATION_ROOT }}
         run: |
-          choco install cmake make openssl vcpkg
+          choco install cmake make openssl
           vcpkg install zlib
 
       - name: Configure for Windows
