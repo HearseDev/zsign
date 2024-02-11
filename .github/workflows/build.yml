@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
+        os: [macos-latest-xlarge, ubuntu-latest, windows-latest]
 
     steps:
       - uses: actions/checkout@v4
@@ -50,8 +50,23 @@ jobs:
         if: runner.os != 'Windows'
         run: cmake --build . --config Release
 
-      - name: Upload artifact
+      - name: Upload for Windows
+        if: runner.os == 'Windows'
         uses: actions/upload-artifact@v4
         with:
-          name: zsign-${{ matrix.os }}
+          name: zsign-win.exe
+          path: ./zsign.exe
+
+      - name: Upload for Linux
+        if: runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: zsign-linux
+          path: ./zsign
+
+      - name: Upload for MacOS ARM
+        if: runner.os == 'Linux'
+        uses: actions/upload-artifact@v4
+        with:
+          name: zsign-macOS-arm64
           path: ./zsign
