@@ -30,7 +30,7 @@ jobs:
         env:
           VCPKG_ROOT: ${{ env.VCPKG_INSTALLATION_ROOT }}
         run: |
-          vcpkg install zlib mman dirent
+          vcpkg install zlib mman
 
       - name: Configure for Windows
         if: runner.os == 'Windows'

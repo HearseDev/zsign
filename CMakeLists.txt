@@ -46,6 +46,8 @@ target_include_directories(zsign PRIVATE ${ZLIB_INCLUDE_DIR})
 list(APPEND LIB_LIST ${ZLIB_LIBRARIES})
 
 if(WIN32)
+	set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -DWINDOWS")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DWINDOWS")
 	find_path(MMAN_DIR NAMES sys/mman.h PATH_SUFFIXES mman)
     target_include_directories(zsign PRIVATE ${MMAN_DIR})
     # find_package(mman CONFIG REQUIRED)
