@@ -48,7 +48,7 @@ on:
 #           path: ./zsign
 
 jobs:
-  build1:
+  macos-arm64:
     runs-on: macos-14
     steps:
       - name: Checkout code
@@ -65,7 +65,7 @@ jobs:
           name: zsign-macos-arm64
           path: ./zsign
 
-  build2:
+  macos-x86_64:
     runs-on: macos-latest
     steps:
       - name: Checkout code
@@ -82,7 +82,7 @@ jobs:
           name: zsign-macos-x86_64
           path: ./zsign
 
-  build3:
+  linux-x86_64:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
