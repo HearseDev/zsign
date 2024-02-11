@@ -29,7 +29,6 @@ jobs:
         env:
           VCPKG_ROOT: ${{ env.VCPKG_INSTALLATION_ROOT }}
         run: |
-          choco install make
           vcpkg install zlib
 
       - name: Configure for Windows
@@ -41,6 +40,7 @@ jobs:
       #   run: cmake -DCMAKE_BUILD_TYPE=Release .
 
       - name: Build
+        working-directory: ./build
         run: cmake --build . --config Release
 
       # - name: Upload artifact
