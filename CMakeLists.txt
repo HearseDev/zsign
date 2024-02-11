@@ -57,5 +57,5 @@ endif()
 # Finalize
 target_include_directories(zsign PRIVATE ${SRC_DIR})
 target_link_libraries(zsign ${LIB_LIST})
-
+# Include the binary directory for the generated version header
 target_include_directories(zsign PUBLIC ${CMAKE_CURRENT_BINARY_DIR})
