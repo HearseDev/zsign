@@ -32,8 +32,8 @@ else()
 endif()
 
 if(WIN32)
-    find_package(mman-win32 CONFIG REQUIRED)
-    target_link_libraries(zsign PRIVATE mman-win32)
+    find_package(mman CONFIG REQUIRED)
+    target_link_libraries(zsign PRIVATE mman)
 endif()
 
 # Configure OpenSSL
