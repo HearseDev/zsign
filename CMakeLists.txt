@@ -46,7 +46,9 @@ target_include_directories(zsign PRIVATE ${ZLIB_INCLUDE_DIR})
 list(APPEND LIB_LIST ${ZLIB_LIBRARIES})
 
 if(WIN32)
-    find_package(mman CONFIG REQUIRED)
+	find_path(MMAN_DIR NAMES sys/mman.h PATH_SUFFIXES mman)
+    target_include_directories(zign PRIVATE ${MMAN_DIR})
+    # find_package(mman CONFIG REQUIRED)
 	list(APPEND LIB_LIST mman)
 endif()
 
