@@ -31,6 +31,11 @@ else()
     find_package(OpenSSL REQUIRED)
 endif()
 
+if(WIN32)
+    find_package(mman CONFIG REQUIRED)
+    target_link_libraries(zsign PRIVATE mman::mman)
+endif()
+
 # Configure OpenSSL
 message("OpenSSL include dir: ${OPENSSL_INCLUDE_DIR}")
 message("OpenSSL libraries: ${OPENSSL_LIBRARIES}")
