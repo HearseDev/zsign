@@ -12,7 +12,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-latest-xlarge, ubuntu-latest, windows-latest]
+        os: [macos-14, ubuntu-latest, windows-latest]
 
     steps:
       - uses: actions/checkout@v4
@@ -65,8 +65,8 @@ jobs:
           path: ./zsign
 
       - name: Upload for MacOS ARM
-        if: runner.os == 'Linux'
+        if: runner.os == ''
         uses: actions/upload-artifact@v4
         with:
-          name: zsign-macOS-arm64
+          name: zsign-macOS-${{ runner.architecture }}
           path: ./zsign
