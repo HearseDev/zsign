@@ -8,8 +8,11 @@
         {
             "name": "windows",
             "binaryDir": "${sourceDir}/build",
+			"generator": "MinGW Makefiles",
             "cacheVariables": {
+				"VCPKG_TARGET_TRIPLET": "x64-mingw-dynamic",
                 "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_INSTALLATION_ROOT}/scripts/buildsystems/vcpkg.cmake"
+
             }
         }
     ]
