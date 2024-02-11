@@ -5,69 +5,96 @@ on:
   push:
     tags:
       - "v*.*"
+# jobs:
+#   build:
+#     runs-on: ${{ matrix.os }}
+
+#     strategy:
+#       fail-fast: false
+#       matrix:
+#         # os: [macos-14, ubuntu-latest, windows-latest]
+#         os: [macos-14, ubuntu-latest]
+#     steps:
+#       - uses: actions/checkout@v4
+#       - name: Install dependencies on Ubuntu
+
+#         if: runner.os == 'Linux'
+#         run: sudo apt-get update && sudo apt-get install -y cmake make openssl zlib1g-dev
+
+#       - name: Install dependencies on macOS
+#         if: runner.os == 'macOS'
+#         run: brew install cmake make openssl zlib
+
+#       - name: Configure for Linux and macOS
+#         if: runner.os != 'Windows'
+#         run: cmake -DCMAKE_BUILD_TYPE=Release .
+
+#       - name: Build for Linux and macOS
+#         if: runner.os != 'Windows'
+#         run: cmake --build . --config Release
+
+#       - name: Upload for Linux
+#         if: runner.os == 'Linux'
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: zsign-linux
+#           path: ./zsign
+
+#       - name: Upload for MacOS ARM
+#         if: runner.os == 'macOS'
+#         uses: actions/upload-artifact@v4
+#         with:
+#           name: zsign-macos-arm64
+#           path: ./zsign
+
 jobs:
-  build:
-    runs-on: ${{ matrix.os }}
-
-    strategy:
-      fail-fast: false
-      matrix:
-        # os: [macos-14, ubuntu-latest, windows-latest]
-        os: [macos-14, ubuntu-latest]
-
+  build1:
+    runs-on: macos-14
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Install dependencies on Ubuntu
-        if: runner.os == 'Linux'
-        run: sudo apt-get update && sudo apt-get install -y cmake make openssl zlib1g-dev
-
-      - name: Install dependencies on macOS
-        if: runner.os == 'macOS'
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
         run: brew install cmake make openssl zlib
-
-      # - name: Install dependencies on Windows
-      #   if: runner.os == 'Windows'
-      #   shell: pwsh
-      #   env:
-      #     VCPKG_ROOT: ${{ env.VCPKG_INSTALLATION_ROOT }}
-      #   run: |
-      #     vcpkg install zlib mman dirent openssl
-
-      # - name: Configure for Windows
-      #   if: runner.os == 'Windows'
-      #   run: cmake --preset=windows -DCMAKE_BUILD_TYPE=Release .
-
-      - name: Configure for Linux and macOS
-        if: runner.os != 'Windows'
+      - name: Configure
         run: cmake -DCMAKE_BUILD_TYPE=Release .
-
-      # - name: Build for Windows
-      #   if: runner.os == 'Windows'
-      #   working-directory: ./build
-      #   run: cmake --build . --config Release
-
-      - name: Build for Linux and macOS
-        if: runner.os != 'Windows'
+      - name: Build
         run: cmake --build . --config Release
-
-      # - name: Upload for Windows
-      #   if: runner.os == 'Windows'
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: zsign-win.exe
-      #     path: ./zsign.exe
-
-      - name: Upload for Linux
-        if: runner.os == 'Linux'
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: zsign-linux
+          name: zsign-macos-arm64
           path: ./zsign
 
-      - name: Upload for MacOS ARM
-        if: runner.os == 'macOS'
+  build2:
+    runs-on: macos-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: brew install cmake make openssl zlib
+      - name: Configure
+        run: cmake -DCMAKE_BUILD_TYPE=Release .
+      - name: Build
+        run: cmake --build . --config Release
+      - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: zsign-macOS-${{ runner.architecture }}
+          name: zsign-macos-x86_64
+          path: ./zsign
+
+  build3:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y cmake make openssl zlib1g-dev
+      - name: Configure
+        run: cmake -DCMAKE_BUILD_TYPE=Release .
+      - name: Build
+        run: cmake --build . --config Release
+      - name: Upload
+        uses: actions/upload-artifact@v4
+        with:
+          name: zsign-linux-x86_64
           path: ./zsign
