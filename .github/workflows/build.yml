@@ -12,7 +12,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [macos-14, ubuntu-latest, windows-latest]
+        # os: [macos-14, ubuntu-latest, windows-latest]
+        os: [macos-14, ubuntu-latest]
 
     steps:
       - uses: actions/checkout@v4
@@ -25,37 +26,37 @@ jobs:
         if: runner.os == 'macOS'
         run: brew install cmake make openssl zlib
 
-      - name: Install dependencies on Windows
-        if: runner.os == 'Windows'
-        shell: pwsh
-        env:
-          VCPKG_ROOT: ${{ env.VCPKG_INSTALLATION_ROOT }}
-        run: |
-          vcpkg install zlib mman dirent openssl
+      # - name: Install dependencies on Windows
+      #   if: runner.os == 'Windows'
+      #   shell: pwsh
+      #   env:
+      #     VCPKG_ROOT: ${{ env.VCPKG_INSTALLATION_ROOT }}
+      #   run: |
+      #     vcpkg install zlib mman dirent openssl
 
-      - name: Configure for Windows
-        if: runner.os == 'Windows'
-        run: cmake --preset=windows -DCMAKE_BUILD_TYPE=Release .
+      # - name: Configure for Windows
+      #   if: runner.os == 'Windows'
+      #   run: cmake --preset=windows -DCMAKE_BUILD_TYPE=Release .
 
       - name: Configure for Linux and macOS
         if: runner.os != 'Windows'
         run: cmake -DCMAKE_BUILD_TYPE=Release .
 
-      - name: Build for Windows
-        if: runner.os == 'Windows'
-        working-directory: ./build
-        run: cmake --build . --config Release
+      # - name: Build for Windows
+      #   if: runner.os == 'Windows'
+      #   working-directory: ./build
+      #   run: cmake --build . --config Release
 
       - name: Build for Linux and macOS
         if: runner.os != 'Windows'
         run: cmake --build . --config Release
 
-      - name: Upload for Windows
-        if: runner.os == 'Windows'
-        uses: actions/upload-artifact@v4
-        with:
-          name: zsign-win.exe
-          path: ./zsign.exe
+      # - name: Upload for Windows
+      #   if: runner.os == 'Windows'
+      #   uses: actions/upload-artifact@v4
+      #   with:
+      #     name: zsign-win.exe
+      #     path: ./zsign.exe
 
       - name: Upload for Linux
         if: runner.os == 'Linux'
@@ -65,7 +66,7 @@ jobs:
           path: ./zsign
 
       - name: Upload for MacOS ARM
-        if: runner.os == ''
+        if: runner.os == 'Darwin'
         uses: actions/upload-artifact@v4
         with:
           name: zsign-macOS-${{ runner.architecture }}
