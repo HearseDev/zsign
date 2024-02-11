@@ -50,8 +50,10 @@ if(WIN32)
     # set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -DWINDOWS")
 	find_path(MMAN_DIR NAMES sys/mman.h PATH_SUFFIXES mman)
     target_include_directories(zsign PRIVATE ${MMAN_DIR})
-    # find_package(mman CONFIG REQUIRED)
-	list(APPEND LIB_LIST mman)
+	# Find the path to the mman library
+	find_library(MMAN_LIBRARY mman)
+	# target_link_libraries(your_target PRIVATE ${MMAN_LIBRARY})
+	list(APPEND LIB_LIST ${MMAN_LIBRARY})
 endif()
 
 # Finalize

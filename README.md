@@ -9,6 +9,8 @@ An updated fork of zsign
 - `cmake`
 - `make`
 - `openssl`
+- On Debian/Ubuntu based distributions, you need the `libssl-dev` package.
+- On other distributions, you might need the `openssl-devel` package.
 
 Run the build script
 
