@@ -29,7 +29,7 @@ jobs:
         env:
           VCPKG_ROOT: ${{ env.VCPKG_INSTALLATION_ROOT }}
         run: |
-          vcpkg install zlib
+          vcpkg install zlib dirent
 
       - name: Configure for Windows
         if: runner.os == 'Windows'
