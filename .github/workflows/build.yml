@@ -11,7 +11,6 @@ jobs:
       fail-fast: false
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-        dependencies: [submodule, vcpkg]
 
     steps:
       - uses: actions/checkout@v4
@@ -30,7 +29,7 @@ jobs:
         env:
           VCPKG_ROOT: ${{ env.VCPKG_INSTALLATION_ROOT }}
         run: |
-          choco install cmake make openssl
+          choco install make
           vcpkg install zlib
 
       - name: Configure for Windows
