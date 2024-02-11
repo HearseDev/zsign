@@ -30,8 +30,13 @@ jobs:
           choco install cmake make openssl vcpkg
           vcpkg install zlib
 
-      - name: Configure
-        run: cmake -DCMAKE_BUILD_TYPE=Release .
+      - name: Configure for Windows
+        if: runner.os == 'Windows'
+        run: cmake --preset=windows -DCMAKE_BUILD_TYPE=Release ..
+
+      - name: Configure for Linux and macOS
+        if: runner.os != 'Windows'
+        run: cmake -DCMAKE_BUILD_TYPE=Release ..
 
       - name: Build
         run: cmake --build . --config Release
