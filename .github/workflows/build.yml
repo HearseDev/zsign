@@ -1,7 +1,10 @@
 # .github/workflows/build.yml
 name: Build
 
-on: [push, pull_request]
+on:
+  push:
+    tags:
+      - "v*.*.*"
 
 jobs:
   build:
@@ -10,19 +13,18 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        # os: [macos-latest, ubuntu-latest, windows-latest]
-        os: [windows-latest]
+        os: [macos-latest, ubuntu-latest, windows-latest]
 
     steps:
       - uses: actions/checkout@v4
 
-      # - name: Install dependencies on Ubuntu
-      #   if: runner.os == 'Linux'
-      #   run: sudo apt-get update && sudo apt-get install -y cmake make openssl zlib1g-dev
+      - name: Install dependencies on Ubuntu
+        if: runner.os == 'Linux'
+        run: sudo apt-get update && sudo apt-get install -y cmake make openssl zlib1g-dev
 
-      # - name: Install dependencies on macOS
-      #   if: runner.os == 'macOS'
-      #   run: brew install cmake make openssl zlib
+      - name: Install dependencies on macOS
+        if: runner.os == 'macOS'
+        run: brew install cmake make openssl zlib
 
       - name: Install dependencies on Windows
         if: runner.os == 'Windows'
@@ -36,16 +38,16 @@ jobs:
         if: runner.os == 'Windows'
         run: cmake --preset=windows -DCMAKE_BUILD_TYPE=Release .
 
-      # - name: Configure for Linux and macOS
-      #   if: runner.os != 'Windows'
-      #   run: cmake -DCMAKE_BUILD_TYPE=Release .
+      - name: Configure for Linux and macOS
+        if: runner.os != 'Windows'
+        run: cmake -DCMAKE_BUILD_TYPE=Release .
 
       - name: Build
         working-directory: ./build
         run: cmake --build . --config Release
 
-      # - name: Upload artifact
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: zsign-${{ matrix.os }}
-      #     path: ./zsign
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: zsign-${{ matrix.os }}
+          path: ./zsign
