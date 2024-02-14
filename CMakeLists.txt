@@ -46,12 +46,25 @@ target_include_directories(zsign PRIVATE ${ZLIB_INCLUDE_DIR})
 list(APPEND LIB_LIST ${ZLIB_LIBRARIES})
 
 if(WIN32)
-	# Find the path to the mman header
-	find_path(MMAN_DIR NAMES sys/mman.h PATH_SUFFIXES mman)
-    target_include_directories(zsign PRIVATE ${MMAN_DIR})
-	# Find the path to the mman library
-	find_library(MMAN_LIBRARY mman)
-	list(APPEND LIB_LIST ${MMAN_LIBRARY})
+    # Get the mman library and include directories from the command line
+    set(MMAN_LIB_DIR ${MMAN_LIB_DIR})
+    set(MMAN_INCLUDE_DIR ${MMAN_INCLUDE_DIR})
+
+    # Check if the variables are set
+    if(NOT MMAN_LIB_DIR)
+    message(FATAL_ERROR "MMAN_LIB_DIR is not set")
+    endif()
+
+    if(NOT MMAN_INCLUDE_DIR)
+    message(FATAL_ERROR "MMAN_INCLUDE_DIR is not set")
+    endif()
+
+    # Include the mman headers
+    include_directories(${MMAN_INCLUDE_DIR})
+
+    # Include the library in your target
+    link_directories(${MMAN_LIB_DIR})
+	list(APPEND LIB_LIST mman)
 endif()
 
 # Finalize
