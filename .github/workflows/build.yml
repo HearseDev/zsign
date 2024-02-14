@@ -5,48 +5,85 @@ on:
   push:
     tags:
       - "v*.*"
+on:
+  push:
+    branches:
+      - "main"
 jobs:
-  macos-arm64:
-    runs-on: macos-14
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Install dependencies
-        run: brew install cmake make openssl zlib
-      - name: Configure
-        run: cmake -DCMAKE_BUILD_TYPE=Release .
-      - name: Build
-        run: cmake --build . --config Release
-      - name: Upload
-        uses: actions/upload-artifact@v4
-        with:
-          name: zsign-macos-arm64
-          path: ./zsign
+  # macos-arm64:
+  #   runs-on: macos-14
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #     - name: Install dependencies
+  #       run: brew install cmake make openssl zlib
+  #     - name: Configure
+  #       run: cmake -DCMAKE_BUILD_TYPE=Release .
+  #     - name: Build
+  #       run: cmake --build . --config Release
+  #     - name: Upload
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: zsign-macos-arm64
+  #         path: ./zsign
 
-  macos-x86_64:
-    runs-on: macos-latest
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-      - name: Install dependencies
-        run: brew install cmake make openssl zlib
-      - name: Configure
-        run: cmake -DCMAKE_BUILD_TYPE=Release .
-      - name: Build
-        run: cmake --build . --config Release
-      - name: Upload
-        uses: actions/upload-artifact@v4
-        with:
-          name: zsign-macos-x86_64
-          path: ./zsign
+  # macos-x86_64:
+  #   runs-on: macos-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #     - name: Install dependencies
+  #       run: brew install cmake make openssl zlib
+  #     - name: Configure
+  #       run: cmake -DCMAKE_BUILD_TYPE=Release .
+  #     - name: Build
+  #       run: cmake --build . --config Release
+  #     - name: Upload
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: zsign-macos-x86_64
+  #         path: ./zsign
 
-  linux-x86_64:
-    runs-on: ubuntu-latest
+  # linux-x86_64:
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: Checkout code
+  #       uses: actions/checkout@v4
+  #     - name: Install dependencies
+  #       run: sudo apt-get update && sudo apt-get install -y cmake make openssl zlib1g-dev
+  #     - name: Configure
+  #       run: cmake -DCMAKE_BUILD_TYPE=Release .
+  #     - name: Build
+  #       run: cmake --build . --config Release
+  #     - name: Upload
+  #       uses: actions/upload-artifact@v4
+  #       with:
+  #         name: zsign-linux-x86_64
+  #         path: ./zsign
+
+  win-x86_64:
+    runs-on: windows-latest
+    strategy:
+      fail-fast: false
+    defaults:
+      run:
+        shell: msys2 {0}
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Install dependencies
-        run: sudo apt-get update && sudo apt-get install -y cmake make openssl zlib1g-dev
+
+      - name: Setup MSYS2
+        uses: msys2/setup-msys2@v2
+        with:
+        msystem: ${{matrix.sys}}
+        update: true
+        install: >-
+          git
+          make
+        pacboy: >-
+          toolchain:p
+          cmake:p
+          openssl:p
       - name: Configure
         run: cmake -DCMAKE_BUILD_TYPE=Release .
       - name: Build
@@ -54,5 +91,5 @@ jobs:
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
-          name: zsign-linux-x86_64
-          path: ./zsign
+          name: zsign-win-x86_64
+          path: ./zsign.exe
