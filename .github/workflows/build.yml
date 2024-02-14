@@ -85,7 +85,7 @@ jobs:
         run: |
           git clone https://github.com/alitrack/mman-win32
           cd mman-win32
-          cmake -DCMAKE_BUILD_TYPE=Release .
+          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="C:/MinGW" .
           cmake --build . --config Release
           cmake --install . --config Release
           ls -l
@@ -93,7 +93,7 @@ jobs:
         run: |
           git clone https://github.com/tronkko/dirent
           cd dirent
-          cmake -DCMAKE_BUILD_TYPE=Release .
+          cmake -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX="C:/MinGW" .
           cmake --build . --config Release
           cmake --install . --config Release
       - name: Configure
