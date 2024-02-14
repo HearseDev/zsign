@@ -81,7 +81,7 @@ jobs:
             cmake:p
             openssl:p
             zlib:p
-      - name: Build mman-win32
+      - name: Build and install mman-win32
         run: |
           git clone https://github.com/alitrack/mman-win32
           cd mman-win32
@@ -89,7 +89,7 @@ jobs:
           cmake --build . --config Release
           cmake --install . --config Release
           ls -l
-      - name: Build dirent
+      - name: Install dirent
         run: |
           git clone https://github.com/tronkko/dirent
           cd dirent
