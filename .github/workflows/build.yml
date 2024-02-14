@@ -87,11 +87,17 @@ jobs:
           cd mman-win32
           cmake -DCMAKE_BUILD_TYPE=Release .
           cmake --build . --config Release
+          cmake --install . --config Release
           ls -l
-      - name: Get dirent.h
-        run: git clone https://github.com/tronkko/dirent
+      - name: Build dirent
+        run: |
+          git clone https://github.com/tronkko/dirent
+          cd dirent
+          cmake -DCMAKE_BUILD_TYPE=Release .
+          cmake --build . --config Release
+          cmake --install . --config Release
       - name: Configure
-        run: cmake -DCMAKE_BUILD_TYPE=Release -DMMAN_INCLUDE_DIR=./mman-win32 -DMMAN_LIB_DIR=./mman-win32 -DDIRENT_INCLUDE_DIR=./dirent/include .
+        run: cmake -DCMAKE_BUILD_TYPE=Release .
       - name: Build
         run: cmake --build . --config Release
       - name: Upload
