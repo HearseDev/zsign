@@ -49,6 +49,7 @@ if(WIN32)
     # Get the mman library and include directories from the command line
     set(MMAN_LIB_DIR ${MMAN_LIB_DIR})
     set(MMAN_INCLUDE_DIR ${MMAN_INCLUDE_DIR})
+    set(DIRENT_INCLUDE_DIR ${DIRENT_INCLUDE_DIR})
 
     # Check if the variables are set
     if(NOT MMAN_LIB_DIR)
@@ -59,8 +60,13 @@ if(WIN32)
     message(FATAL_ERROR "MMAN_INCLUDE_DIR is not set")
     endif()
 
+    if(NOT DIRENT_INCLUDE_DIR)
+    message(FATAL_ERROR "DIRENT_INCLUDE_DIR is not set")
+    endif()
+
     # Include the mman headers
     include_directories(${MMAN_INCLUDE_DIR})
+    include_directories(${DIRENT_INCLUDE_DIR})
 
     # Include the library in your target
     link_directories(${MMAN_LIB_DIR})

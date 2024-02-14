@@ -13,11 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#ifdef WIN32
-#include <mman.h>
-#else
 #include <sys/mman.h>
-#endif
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/types.h>
