@@ -45,14 +45,14 @@ message("zlib libraries: ${ZLIB_LIBRARIES}")
 target_include_directories(zsign PRIVATE ${ZLIB_INCLUDE_DIR})
 list(APPEND LIB_LIST ${ZLIB_LIBRARIES})
 
-if(WIN32)
-	# Find the path to the mman header
-	find_path(MMAN_DIR NAMES sys/mman.h PATH_SUFFIXES mman)
-    target_include_directories(zsign PRIVATE ${MMAN_DIR})
-	# Find the path to the mman library
-	find_library(MMAN_LIBRARY mman)
-	list(APPEND LIB_LIST ${MMAN_LIBRARY})
-endif()
+# if(WIN32)
+# 	# Find the path to the mman header
+# 	find_path(MMAN_DIR NAMES sys/mman.h PATH_SUFFIXES mman)
+#     target_include_directories(zsign PRIVATE ${MMAN_DIR})
+# 	# Find the path to the mman library
+# 	find_library(MMAN_LIBRARY mman)
+# 	list(APPEND LIB_LIST ${MMAN_LIBRARY})
+# endif()
 
 # Finalize
 target_include_directories(zsign PRIVATE ${SRC_DIR})
