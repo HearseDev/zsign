@@ -81,11 +81,16 @@ jobs:
             cmake:p
             openssl:p
             zlib:p
-            mman-win32:p
       - name: Configure
-        run: cmake -DCMAKE_BUILD_TYPE=Release .
+        run: |
+          git clone https://github.com/alitrack/mman-win32
+          cd mman-win32
+          cmake -DCMAKE_BUILD_TYPE=Release .
+          cmake --build . --config Release
       - name: Build
-        run: cmake --build . --config Release
+        run: |
+          cmake -DCMAKE_BUILD_TYPE=Release .
+          cmake --build . --config Release
       - name: Upload
         uses: actions/upload-artifact@v4
         with:
