@@ -68,9 +68,13 @@ if(WIN32)
     include_directories(${MMAN_INCLUDE_DIR})
     include_directories(${DIRENT_INCLUDE_DIR})
 
-    # Include the library in your target
-    link_directories(${MMAN_LIB_DIR})
-	list(APPEND LIB_LIST mman)
+    find_library(MMAN_LIBRARY NAMES mman PATHS ${MMAN_LIB_DIR} NO_DEFAULT_PATH)
+    # Check if the library was found
+    if(NOT MMAN_LIBRARY)
+        message(FATAL_ERROR "mman library not found")
+    endif()
+
+	list(APPEND LIB_LIST ${MMAN_LIBRARY})
 endif()
 
 # Finalize
