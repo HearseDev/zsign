@@ -81,6 +81,7 @@ jobs:
             cmake:p
             openssl:p
             zlib:p
+            mman:p
       - name: Configure
         run: cmake -DCMAKE_BUILD_TYPE=Release .
       - name: Build
