@@ -5,10 +5,7 @@ name: Build
 #   push:
 #     tags:
 #       - "v*.*"
-on:
-  push:
-    branches:
-      - "main"
+on: push
 jobs:
   # macos-arm64:
   #   runs-on: macos-14
