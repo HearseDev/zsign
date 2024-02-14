@@ -46,12 +46,8 @@ target_include_directories(zsign PRIVATE ${ZLIB_INCLUDE_DIR})
 list(APPEND LIB_LIST ${ZLIB_LIBRARIES})
 
 if(WIN32)
-    # Find the mman library
-    find_library(MMAN_LIBRARY NAMES mman)
-    if(NOT MMAN_LIBRARY)
-        message(FATAL_ERROR "mman library not found")
-    endif()
-    list(APPEND LIB_LIST ${MMAN_LIBRARY})
+    find_package(MMAN REQUIRED)
+    list(APPEND LIB_LIST ${MMAN_LIBRARIES})
 endif()
 
 # Finalize
