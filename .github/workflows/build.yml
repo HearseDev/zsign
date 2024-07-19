@@ -1,11 +1,6 @@
 # .github/workflows/build.yml
 name: Build
 
-on:
-  push:
-    tags:
-      - "v*.*"
-
 jobs:
   macos-arm64:
     runs-on: macos-14
