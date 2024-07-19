@@ -3,7 +3,7 @@
 #include "common/common.h"
 #include "macho.h"
 #include "sys/stat.h"
-#include "sys/types.h"
+// #include "sys/types.h"
 
 ZAppBundle::ZAppBundle () {
     m_pSignAsset  = NULL;

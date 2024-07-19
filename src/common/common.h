@@ -1,7 +1,11 @@
 #pragma once
 
 #include <assert.h>
+#if defined(WIN32)
+#include "win/dirent.h"
+#else
 #include <dirent.h>
+#endif
 #include <errno.h>
 #include <fcntl.h>
 #include <ftw.h>

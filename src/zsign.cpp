@@ -2,7 +2,11 @@
 #include "common/common.h"
 #include "macho.h"
 #include "openssl.h"
+#if defined(WIN32)
+#include "win/dirent.h"
+#else
 #include <dirent.h>
+#endif
 #include <getopt.h>
 #include <libgen.h>
 #include "zsign_config.h"
@@ -18,11 +22,9 @@ const struct option options[] = { { "debug", no_argument, NULL, 'd' },
     { "entitlements", required_argument, NULL, 'e' },
     { "output", required_argument, NULL, 'o' },
     { "zip_level", required_argument, NULL, 'z' },
-    { "dylib", required_argument, NULL, 'l' },
-    { "weak", no_argument, NULL, 'w' }, { "install", no_argument, NULL, 'i' },
-    { "quiet", no_argument, NULL, 'q' }, { "help", no_argument, NULL, 'h' }, 
-	{ "version", no_argument, NULL, 'v' },
-	{}};
+    { "dylib", required_argument, NULL, 'l' }, { "weak", no_argument, NULL, 'w' },
+    { "install", no_argument, NULL, 'i' }, { "quiet", no_argument, NULL, 'q' },
+    { "help", no_argument, NULL, 'h' }, { "version", no_argument, NULL, 'v' }, {} };
 
 int usage () {
     ZLog::Print ("Usage: zsign [-options] [-k privkey.pem] [-m dev.prov] [-o "

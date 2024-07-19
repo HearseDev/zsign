@@ -333,7 +333,8 @@ uint64_t GetMicroSecond () {
     return tv.tv_sec * 1000000 + tv.tv_usec;
 }
 
-bool SystemExec (const char* szFormatCmd, ...) {
+// Deprecating SystemExec
+bool __attribute__ ((deprecated)) SystemExec (const char* szFormatCmd, ...) {
     PARSEVALIST (szFormatCmd, szCmd)
 
     if (strlen (szCmd) <= 0) {
