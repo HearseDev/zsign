@@ -46,7 +46,9 @@ target_include_directories(zsign PRIVATE ${ZLIB_INCLUDE_DIR})
 list(APPEND LIB_LIST ${ZLIB_LIBRARIES})
 
 if(WIN32)
-  target_sources(zsign PRIVATE ${SRC_DIR}/common/win/mman.c)
+    target_sources(zsign PRIVATE ${SRC_DIR}/common/win/mman.c)
+    target_compile_options(zsign PRIVATE -static-libgcc -static-libstdc++)
+    target_link_options(zsign PRIVATE -static-libgcc -static-libstdc++ -static)
 endif()
 
 # Finalize
