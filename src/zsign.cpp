@@ -2,7 +2,7 @@
 #include "common/common.h"
 #include "macho.h"
 #include "openssl.h"
-#if defined(WIN32)
+#ifdef _WIN32
 #include "win/dirent.h"
 #else
 #include <dirent.h>

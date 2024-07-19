@@ -1,9 +1,11 @@
 #pragma once
 
 #include <assert.h>
-#if defined(WIN32)
+#ifdef _WIN32
 #include "win/dirent.h"
+#include "win/mman.h"
 #else
+#include <sys/mman.h>
 #include <dirent.h>
 #endif
 #include <errno.h>
@@ -17,7 +19,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <sys/mman.h>
 #include <sys/stat.h>
 #include <sys/time.h>
 #include <sys/types.h>

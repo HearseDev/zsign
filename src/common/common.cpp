@@ -164,7 +164,7 @@ bool IsFolderV (const char* szFormatPath, ...) {
 
 bool CreateFolder (const char* szFolder) {
     if (!IsFolder (szFolder)) {
-#if defined(WIN32)
+#ifdef _WIN32
         return (0 == mkdir (szFolder));
 #else
         return (0 == mkdir (szFolder, 0755));
@@ -240,7 +240,7 @@ string GetCanonicalizePath (const char* szPath) {
         if ('/' != szPath[0]) {
             char path[PATH_MAX] = { 0 };
 
-#if defined(WIN32)
+#ifdef _WIN32
 
             if (NULL != _fullpath ((char*)"./", path, PATH_BUFFER_LENGTH)) {
                 strPath = path;
@@ -347,7 +347,7 @@ bool __attribute__ ((deprecated)) SystemExec (const char* szFormatCmd, ...) {
         ZLog::ErrorV ("SystemExec: \"%s\", Error!\n", szCmd);
         return false;
     } else {
-#if !defined(WIN32)
+#ifndef _WIN32
         if (WIFEXITED (status)) {
             if (0 == WEXITSTATUS (status)) {
                 return true;

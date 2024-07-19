@@ -78,13 +78,6 @@ jobs:
             cmake:p
             openssl:p
             zlib:p
-      - name: Build and Install mman-win32
-        run: |
-          git clone https://github.com/alitrack/mman-win32
-          cd mman-win32
-          cd build
-          cmake .. && make -j2
-          sudo make install
       - name: Configure and Build
         run: |
           cmake -DCMAKE_BUILD_TYPE=Release .
