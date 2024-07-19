@@ -56,6 +56,7 @@ if(WIN32)
     target_sources(zsign PRIVATE ${SRC_DIR}/common/win/mman.c)
     target_compile_options(zsign PRIVATE -static-libgcc -static-libstdc++)
     target_link_options(zsign PRIVATE -static-libgcc -static-libstdc++ -static)
+    target_link_libraries(zsign -lcrypt32 ws2_32 wsock32)
 endif()
 
 # Finalize
