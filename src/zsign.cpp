@@ -2,11 +2,6 @@
 #include "common/common.h"
 #include "macho.h"
 #include "openssl.h"
-#ifdef _WIN32
-#include "win/dirent.h"
-#else
-#include <dirent.h>
-#endif
 #include <getopt.h>
 #include <libgen.h>
 #include "zsign_config.h"
